@@ -1,0 +1,177 @@
+version: "3.9"
+services:
+  CPE:
+        image: t5ub074ngogogo/e2e_base
+        container_name: CPE
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network01:
+#            ipv4_address: 10.0.1.4
+            ipv6_address: 2001:db8:0:10::4
+          network02:
+#            ipv4_address: 10.0.2.3
+            ipv6_address: 2001:db8:0:203::3
+          network03:
+#            ipv4_address: 10.0.3.3
+            ipv6_address: 2001:db8:0:204::3
+
+  device01:
+        image: t5ub074ngogogo/e2e_base
+        container_name: device01
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network01:
+#            ipv4_address: 10.0.1.2
+            ipv6_address: 2001:db8:0:10::2
+
+  device02:
+        image: t5ub074ngogogo/e2e_base
+        container_name: device02
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+
+  PE01:
+        image: frrouting/frr
+        container_name: PE01
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network02:
+ #           ipv4_address: 10.0.2.2
+            ipv6_address: 2001:db8:0:203::2
+          network04:
+ #           ipv4_address: 10.0.4.3
+            ipv6_address: 2001:fa8:ba21:193::3
+          network06:
+ #           ipv4_address: 10.0.6.11
+            ipv6_address: 2001:fa8:ba21:200::11
+
+  PE02:
+        image: frrouting/frr
+        container_name: PE02
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network03:
+ #           ipv4_address: 10.0.3.2
+            ipv6_address: 2001:db8:0:204::2
+          network04:
+ #           ipv4_address: 10.0.4.4
+            ipv6_address: 2001:fa8:ba21:193::4
+          network06:
+ #           ipv4_address: 10.0.6.12
+            ipv6_address: 2001:fa8:ba21:200::12
+
+  vCPE:
+        image: t5ub074ngogogo/e2e_base
+        container_name: vCPE
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network04:
+ #           ipv4_address: 10.0.4.2
+            ipv6_address: 2001:fa8:ba21:193::2
+          network05:
+ #           ipv4_address: 10.0.5.4
+            ipv6_address: 2001:db8:0:20::4
+
+  App01:
+        image: t5ub074ngogogo/e2e_base
+        container_name: App01
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network05:
+ #           ipv4_address: 10.0.5.2
+            ipv6_address: 2001:db8:0:20::2
+
+  App02:
+        image: t5ub074ngogogo/e2e_base
+        container_name: App02
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network05:
+#            ipv4_address: 10.0.5.3
+            ipv6_address: 2001:db8:0:20::3
+
+  Ctl:
+        image: t5ub074ngogogo/e2e_base
+        container_name: Ctl
+        restart: always
+        tty: true
+        privileged: true
+        sysctls:
+          net.ipv6.conf.all.forwarding: 1
+          net.ipv6.conf.all.seg6_enabled: 1
+          net.ipv6.conf.lo.seg6_enabled: 1
+          net.ipv6.conf.default.seg6_enabled: 1
+        networks:
+          network06:
+#            ipv4_address: 10.0.6.10
+            ipv6_address: 2001:fa8:ba21:200::10
+networks:
+  network01:
+    external: true
+
+  network02:
+    external: true
+
+  network03:
+    external: true
+
+  network04:
+    external: true
+
+  network05:
+    external: true
+
+  network06:
+    external: true
